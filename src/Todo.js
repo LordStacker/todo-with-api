@@ -11,7 +11,7 @@ const Todo = () => {
     //Update 'PUT'
     //Delete 'DELETE'
 
-    //Create user
+   /* //Create user
     useEffect(() => {
         fetch(rlu, {
             method: "POST", 
@@ -25,10 +25,10 @@ const Todo = () => {
             })
             .then(data => console.log(data))
             .catch(error => console.log(error))
-    }, [])
+    }, [])*/
     //Update task
     useEffect(() => {
-        fetch("https://assets.breatheco.de/apis/fake/todos/user/nicolam",{
+        fetch(rlu,{
             method: "PUT",
             headers: {
                 "Content-type": "application/json"
@@ -60,7 +60,8 @@ const Todo = () => {
             .then(data => console.log(data))
             .catch(error => console.log(error))
     })
-    //Delete task
+    /*//Delete task
+    
     useEffect(() =>{
         fetch(rlu,{
             method: "DELETE",
@@ -73,8 +74,7 @@ const Todo = () => {
         })
         .then(data => console.log(data))
         .catch(error => console.log(error))
-
-    })
+    })*/
     const onSubmit = (e) => {
         e.preventDefault();
         setListareas([...listareas, tareas]);
