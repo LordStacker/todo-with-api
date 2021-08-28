@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import react from 'react';
-import { data } from "jquery";
 
 const Todo = () => {
     const [listareas, setListareas] = useState([]);
@@ -10,22 +9,6 @@ const Todo = () => {
     //Read   'GET'
     //Update 'PUT'
     //Delete 'DELETE'
-
-   /* //Create user
-    useEffect(() => {
-        fetch(rlu, {
-            method: "POST", 
-            headers: {
-                "Content-type": "application/json"
-            },
-            body:JSON.stringify([])
-        })
-            .then((res) => {
-            return console.log(res)
-            })
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
-    }, [])*/
     //Update task
     useEffect(() => {
         fetch(rlu,{
@@ -36,7 +19,8 @@ const Todo = () => {
             body:JSON.stringify(
                 [
                     {"label": "code", "done": false},
-                    {"label": "morecode", "done": false}	
+                    {"label": "morecode", "done": false},
+                    {"label": "morework", "done": false}	
                 ])
         })
             .then((res) => {
@@ -45,7 +29,7 @@ const Todo = () => {
             .then(data => console.log(data))
             .catch(error => console.log(error))
        
-    })
+    },[])
     //Read task
     useEffect(() =>{
         fetch(rlu,{
@@ -57,24 +41,10 @@ const Todo = () => {
             .then((res) => {
                 return res.json()
             })
-            .then(data => console.log(data))
+            .then(data => setListareas(data))
             .catch(error => console.log(error))
-    })
-    /*//Delete task
-    
-    useEffect(() =>{
-        fetch(rlu,{
-            method: "DELETE",
-            headers: {
-                "Content-type": "applicatio/json"
-            },
-        })
-        .then((res) => {
-            return res.json()
-        })
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
-    })*/
+    },[])
+   
     const onSubmit = (e) => {
         e.preventDefault();
         setListareas([...listareas, tareas]);
@@ -97,7 +67,7 @@ const Todo = () => {
                         </div>
                         <ul className="list-group">
                             {
-                                listareas.map((li, key) => <li className="list-group-item" key={key} >{li}<span className="close" onClick={() => deleteTask(key)}>X</span></li>)
+                                listareas.map((li, key) => <li className="list-group-item" key={key} >{li.label}<span className="close" onClick={() => deleteTask(key)}>X</span></li>)
                             }
                         </ul>
                     </div>
