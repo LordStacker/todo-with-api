@@ -1,53 +1,73 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 import react from 'react';
 
 const Todo = () => {
     const [listareas, setListareas] = useState([]);
     const [tareas, setTareas] = useState('');
+    const Todoing = [
+        {"label": "code", "done": false},
+        {"label": "morecode", "done": false},
+        {"label": "morework", "done": false}	
+    ]
     const rlu = "https://assets.breatheco.de/apis/fake/todos/user/nicolam";
     //Create 'POST'
     //Read   'GET'
     //Update 'PUT'
-    //Delete 'DELETE'
+    //Delete 'DELETE'    
     //Update task
-    useEffect(() => {
+    const updateData = () => {
         fetch(rlu,{
             method: "PUT",
             headers: {
                 "Content-type": "application/json"
             },
-            body:JSON.stringify(
-                [
-                    {"label": "code", "done": false},
-                    {"label": "morecode", "done": false},
-                    {"label": "morework", "done": false}	
-                ])
+            body:JSON.stringify(Todoing)
         })
             .then((res) => {
                 return res.json()
             })
             .then(data => console.log(data))
             .catch(error => console.log(error))
-       
-    },[])
+    }
+    
+    useEffect(() => {
+        updateData()},[])
+        
     //Read task
     useEffect(() =>{
-        fetch(rlu,{
-            method: "GET",
-            headers: {
-                "Content-type":"application/json"
-            },
-        })
-            .then((res) => {
-                return res.json()
+        ReadData()},[])
+
+    const ReadData = () => {
+            fetch(rlu,{
+                method: "GET",
+                headers: {
+                    "Content-type":"application/json"
+                },
             })
-            .then(data => setListareas(data))
-            .catch(error => console.log(error))
-    },[])
-   
+                .then((res) => {
+                    return res.json()
+                })
+                .then(data => setListareas(data))
+                .catch(error => console.log(error))
+    }
     const onSubmit = (e) => {
         e.preventDefault();
-        setListareas([...listareas, tareas]);
+        setListareas([...listareas, { label: '' + tareas + '', done: false }]);
+        console.log(tareas);
+        fetch("https://assets.breatheco.de/apis/fake/todos/user/nicolam", {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tareas)
+        }).then((res) => {
+            console.log(res);
+            return res.json()
+        }).then(
+            data => console.log(data)
+        ).catch(
+            error => console.log(error)
+        );
     };
     const handleChange = (e) => {
         setTareas(e.target.value);

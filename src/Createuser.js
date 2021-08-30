@@ -1,4 +1,5 @@
- /* //Create user
+  //Create user
+  const rlu = "https://assets.breatheco.de/apis/fake/todos/user/nicolam";
     useEffect(() => {
         fetch(rlu, {
             method: "POST", 
@@ -12,4 +13,4 @@
             })
             .then(data => console.log(data))
             .catch(error => console.log(error))
-    }, [])*/
+    },[])
