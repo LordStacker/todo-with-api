@@ -59,7 +59,7 @@ const Todo = () => {
             headers:{
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(tareas)
+            body: JSON.stringify([...listareas, { label: '' + tareas + '', done: false }])
         }).then((res) => {
             console.log(res);
             return res.json()
@@ -68,14 +68,28 @@ const Todo = () => {
         ).catch(
             error => console.log(error)
         );
+        setTareas(" ");
     };
     const handleChange = (e) => {
         setTareas(e.target.value);
     };
     const deleteTask = (key) => {
         setListareas(listareas.filter((item, index) => index !== key));
-        console.log(key);
-    };
+        fetch("https://assets.breatheco.de/apis/fake/todos/user/robcmppp", {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(listareas.filter((item, index) => index !== key))
+        }).then((res) => {
+            console.log(res);
+            return res.json()
+        }).then(
+            data => console.log(data)
+        ).catch(
+            error => console.log(error)
+        );
+    }
     return (
         <div>
             <h1>Todo List</h1>
